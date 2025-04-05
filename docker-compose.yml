@@ -2,6 +2,17 @@ version: '3.5'
 
 services:
 
+  web:
+    hostname: web
+    build: .
+    ports:
+      - 3000:80
+    restart: always
+    networks:
+      - net_postgres
+    depends_on:
+      - db
+
   db:
     container_name: postgres_container
     image: postgres
