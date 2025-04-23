@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_05_152600) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_23_044754) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "addresses", force: :cascade do |t|
+    t.string "eid"
+    t.decimal "balance"
+    t.string "path"
+    t.integer "direction"
+    t.string "wif"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "currencies", force: :cascade do |t|
     t.string "name"
@@ -24,13 +34,20 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_05_152600) do
 
   create_table "rates", force: :cascade do |t|
     t.bigint "currency_id", null: false
-    t.float "value"
+    t.decimal "value", precision: 16, scale: 8
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["currency_id"], name: "index_rates_on_currency_id"
   end
 
   create_table "transactions", force: :cascade do |t|
+    t.decimal "in_value", precision: 16, scale: 8
+    t.string "in_addr"
+    t.string "out_addr"
+    t.string "change_addr"
+    t.decimal "fee_value", precision: 16, scale: 8
+    t.decimal "fee_percent"
+    t.string "wallet"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

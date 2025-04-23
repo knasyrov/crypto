@@ -9,5 +9,5 @@
 #   end
 
 ['USDT'].each do |currency|
-  Currency.find_or_create_by(key: 'usdt', name: 'USDT')
+  Currency.find_or_create_by(key: 'usdt', name: 'Tether USDt')
 end

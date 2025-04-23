@@ -6,5 +6,47 @@
         - transaction.errors.each do |error|
           li = error.full_message
 
-  div
-    = form.submit
+  .row.mb-3
+    .col-3
+      = form.label "Кошелек", class: 'form-label'
+    .col-6
+      = form.select :in_addr, Address.where(direction: 0).all.collect { |p| [ "#{p.eid} - #{p.balance}", "#{p.eid}|#{p.balance}" ] }, { include_blank: true }, class: 'form-control'
+    .col-3
+      = text_field_tag :balance, '', class: 'form-control', readonly: true, html: { disabled: true, readonly: true }
+  .row.mb-3
+    .col-3 
+      = form.label "Сдача", class: 'form-label'
+    .col-6  
+      = form.select :change_addr, Address.where(direction: 1).all.collect { |p| [ p.eid, p.eid ] }, { include_blank: true }, class: 'form-control'
+
+  .row.mb-3
+    .col-3
+      = form.label :out_addr, "Куда", class: 'form-label'
+    .col-6
+      = form.text_field :out_addr, class: 'form-control'
+
+  .row.mb-3
+    .col-3
+      = form.label :in_value, "Сколько", class: 'form-label'
+    .col-6
+      = form.number_field :in_value, class: 'form-control'
+  
+  .row
+    .col-3
+    .col-3
+      = label_tag :fee_value, "Коммисия майнера (3%)", class: 'form-label'
+      = text_field_tag :fee_value, '', class: 'form-control'
+    .col-3
+      = label_tag :out_value, "Будет списано", class: 'form-label'
+      = text_field_tag :out_value, '', class: 'form-control'
+    .col-3
+      = label_tag :change_value, "Будет возвращено", class: 'form-label'
+      = text_field_tag :change_value, '', class: 'form-control'
+
+
+  .row.g-3(style='margin-top: 10px;')
+    .col-auto
+      = form.submit 'Cохранить'
+      | &nbsp; | &nbsp;
+      = link_to 'Назад', root_path
+

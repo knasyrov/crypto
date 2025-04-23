@@ -1,0 +1,24 @@
+br
+h3 Адреса
+br
+table.table.table-bordered
+  thead 
+    tr
+      th Address
+      th Path
+      th Balance (sat.)
+  tbody
+    - @addresses.each do |e| 
+      tr 
+        td= e.eid
+        td= e.path
+        td= e.balance.to_i 
+
+  tfoot
+    tr
+      td 
+      td 
+      td= @addresses.sum(:balance).to_i
+
+
+

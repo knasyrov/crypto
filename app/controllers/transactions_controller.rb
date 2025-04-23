@@ -13,6 +13,8 @@ class TransactionsController < ApplicationController
   # GET /transactions/new
   def new
     @transaction = Transaction.new
+    #@transaction.exchange_fee = 0.03
+    #@transaction.network_fee = 0.000006
   end
 
   # GET /transactions/1/edit
@@ -22,6 +24,12 @@ class TransactionsController < ApplicationController
   # POST /transactions or /transactions.json
   def create
     @transaction = Transaction.new(transaction_params)
+    @transaction.in_addr = @transaction.in_addr.split('|').first
+    puts params[:balance]
+    puts params[:fee_value]
+    @transaction.fee_percent = params[:fee_percent]
+    @transaction.fee_value = params[:fee_value]
+    puts "--->", @transaction.inspect
 
     respond_to do |format|
       if @transaction.save
@@ -58,13 +66,20 @@ class TransactionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_transaction
       @transaction = Transaction.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def transaction_params
-      params.fetch(:transaction, {})
+=begin
+      params.fetch(:transaction, {}).permit(:in_value,
+                                            :in_addr,
+                                            :out_addr,
+                                            :change_addr,
+                                            :fee_value,
+                                            :fee_percent,
+                                            :wallet)
+=end
+      params.fetch(:transaction, {}).permit!
     end
 end

@@ -1,0 +1,30 @@
+{
+  "wallet_id": "wallet0",
+  "mnemonic": [
+    "question",
+    "fix",
+    "purpose",
+    "bracket",
+    "tourist",
+    "wink",
+    "soup",
+    "jacket",
+    "hawk",
+    "tray",
+    "spoon",
+    "horn",
+    "dentist",
+    "ladder",
+    "spread",
+    "execute",
+    "keep",
+    "giant",
+    "above",
+    "arena",
+    "imitate",
+    "slot",
+    "alter",
+    "trust"
+  ]
+}
+
