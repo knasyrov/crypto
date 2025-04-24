@@ -10,15 +10,20 @@
     .col-3
       = form.label "Кошелек", class: 'form-label'
     .col-6
-      = form.select :in_addr, Address.where(direction: 0).all.collect { |p| [ "#{p.eid} - #{p.balance}", "#{p.eid}|#{p.balance}" ] }, { include_blank: true }, class: 'form-control'
+      = form.select :in_addr, 
+                    Address.where(direction: 0).all.collect { |p| [ "#{p.eid} - #{p.balance}", p.eid, { data: { eid: p.eid, balance: p.balance }} ] },
+                    { include_blank: true },
+                    class: 'form-control', 'data-action' => "transaction#change_input", 'data-transaction-target' => "source"
     .col-3
-      = text_field_tag :balance, '', class: 'form-control', readonly: true, html: { disabled: true, readonly: true }
+      = text_field_tag :in_balance, '', type: :number, class: 'form-control', disabled: true, data: { 'transaction-target' => 'balance' }
   .row.mb-3
     .col-3 
       = form.label "Сдача", class: 'form-label'
     .col-6  
-      = form.select :change_addr, Address.where(direction: 1).all.collect { |p| [ p.eid, p.eid ] }, { include_blank: true }, class: 'form-control'
-
+      = form.select :change_addr,
+                    Address.where(direction: 1).all.collect { |p| [ p.eid, p.eid, { data: { eid: p.eid } } ] },
+                    { include_blank: true },
+                    class: 'form-control', 'data-transaction-target' => "changeAddr"
   .row.mb-3
     .col-3
       = form.label :out_addr, "Куда", class: 'form-label'
@@ -29,24 +34,23 @@
     .col-3
       = form.label :in_value, "Сколько", class: 'form-label'
     .col-6
-      = form.number_field :in_value, class: 'form-control'
+      = form.number_field :in_value, class: 'form-control', 'data-action' => "transaction#change_in", 'data-transaction-target' => "inValue"
   
   .row
     .col-3
     .col-3
       = label_tag :fee_value, "Коммисия майнера (3%)", class: 'form-label'
-      = text_field_tag :fee_value, '', class: 'form-control'
+      = form.text_field :fee_value, type: :number, class: 'form-control', data: { 'transaction-target' => 'fee' }
     .col-3
       = label_tag :out_value, "Будет списано", class: 'form-label'
-      = text_field_tag :out_value, '', class: 'form-control'
+      = text_field_tag :out_value, '', type: :number, class: 'form-control', disabled: true, data: { 'transaction-target' => 'out' }
     .col-3
       = label_tag :change_value, "Будет возвращено", class: 'form-label'
-      = text_field_tag :change_value, '', class: 'form-control'
-
+      = text_field_tag :change_value, '', type: :number, class: 'form-control', disabled: true, data: { 'transaction-target' => 'change' }
 
   .row.g-3(style='margin-top: 10px;')
     .col-auto
-      = form.submit 'Cохранить'
-      | &nbsp; | &nbsp;
-      = link_to 'Назад', root_path
+      = form.submit 'Cохранить', class: 'btn btn-primary'
+      | &nbsp; &nbsp;
+      = link_to 'Назад', root_path, class: 'btn btn-light'
 

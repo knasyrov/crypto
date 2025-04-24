@@ -1,6 +1,4 @@
-br
-h2 Админка
-br
+= content_for :title, "Админка"
 h3 Таблица статистики
 br
 table.table.table-bordered
@@ -31,13 +29,10 @@ table.table.table-bordered
       th Exchange fee
       th Status
 
-  tbody 
-    tr 
-      td 0
-      td 0
-      td 0
-      td 0
-      td 0
-      td 0
-      td 0
-  
+  tbody
+    - @transactions.each do |tr|
+      tr 
+        td 
+        td= tr.created_at
+        td= tr.in_addr
+        td= tr.out_addr

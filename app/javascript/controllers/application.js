@@ -1,7 +1,7 @@
 import { Application } from "@hotwired/stimulus"
-import jquery from "jquery"
-window.jQuery = jquery
-window.$ = jquery
+//import jquery from "jquery"
+//window.jQuery = jquery
+//window.$ = jquery
 
 const application = Application.start()
 
@@ -11,8 +11,8 @@ window.Stimulus   = application
 
 export { application }
 
-console.log("ASASAS2");
-
+//console.log("ASASAS2");
+/*
 $(document).on('turbo:load', function() {
     console.log('!!!!!!!!!!!!!load');
 
@@ -49,7 +49,4 @@ $(document).on('turbo:load', function() {
 
     $('select#transaction_in_addr').trigger('change');
   });
-
-  $(document).on('turbo:ready', function() {
-    console.log('!!!!!!!!!!!!!ready')
-  });
+*/

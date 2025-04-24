@@ -1,12 +1,12 @@
 require 'bitcoin'
+require 'httparty'
 
 module Services
   
-  class BitcoinExt
+  class Mempool
     def initialize
       Bitcoin.chain_params = :signet
     end
-
   end
   
 end

@@ -1,12 +1,11 @@
-br
-h3 Адреса
+= content_for :title, "Адреса"
 br
 table.table.table-bordered
   thead 
     tr
-      th Address
-      th Path
-      th Balance (sat.)
+      th Адрес
+      th Путь
+      th Баланс (sat.)
   tbody
     - @addresses.each do |e| 
       tr 
