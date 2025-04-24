@@ -1,6 +1,6 @@
 class CreateAddresses < ActiveRecord::Migration[7.2]
   def change
-    create_table :addresses do |t|
+    create_table :addresses, primary_key: :eid do |t|
       t.string :eid
       t.decimal :balance
       t.string :path
@@ -8,6 +8,7 @@ class CreateAddresses < ActiveRecord::Migration[7.2]
       t.string :wif
 
       t.timestamps
+      t.index :wif
     end
   end
 end
