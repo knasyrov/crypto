@@ -4,10 +4,11 @@
 namespace :crypto do
   desc "Build new wallet"
   task create_wallet: :environment do
+    BitcoinE::Client.generate
+    BitcoinE::Client.load_data
+=begin    
     Bitcoin.chain_params = :signet
     mnemonic = Bitcoin::Mnemonic.new('english')
-    
-    Transaction.all
 
     word_list = %w(crystal decline october ask property climb correct auction outdoor voyage enable shallow skin marble link sorry tonight cycle grab okay roast brush theory joke)
     seed = mnemonic.to_seed(word_list)
@@ -39,5 +40,6 @@ namespace :crypto do
         putc '.'
       end
     end
+=end
   end
 end

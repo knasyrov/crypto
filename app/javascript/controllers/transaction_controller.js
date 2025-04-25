@@ -20,7 +20,7 @@ export default class extends Controller {
 
   change_in(event) {
     var inValue = Number(this.inValueTarget.value);
-    var fee = Math.round(0.1 * inValue);
+    var fee = Math.round(0.03 * inValue);
     this.feeTarget.value = fee;
     var out = inValue + fee;
     this.outTarget.value = out;
