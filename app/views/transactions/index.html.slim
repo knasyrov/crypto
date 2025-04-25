@@ -2,10 +2,21 @@ p style="color: green" = notice
 
 h1 Transactions
 
-#transactions
-  - @transactions.each do |transaction|
-    == render transaction
-    p
-      = link_to "Show this transaction", transaction
 
+#transactions
+
+table.table.table-bordered
+  thead 
+    tr
+      th Обновлена
+      th Состояние
+      th Сумма
+  tbody
+    - @transactions.each do |transaction|
+      tr 
+        td= transaction.updated_at.strftime("%d.%m.%Y %H:%M")
+        td= transaction.state
+        td= transaction.in_value
+        td= link_to "Show", transaction
+      
 = link_to "New transaction", new_transaction_path

@@ -9,6 +9,12 @@ class AddressesController < ApplicationController
   def show
   end
 
+  def reload
+    BitcoinE::Client.update_balance
+    @addresses = Address.all
+    render action: :index
+  end
+
   private
 
 =begin

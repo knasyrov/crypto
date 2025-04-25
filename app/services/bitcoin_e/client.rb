@@ -174,8 +174,6 @@ module BitcoinE
         verifed = tx.verify_input_sig(0, script_input_pubkey, amount: last_sum)
         #puts "verifed = #{verifed}"
 
-        puts "curl -X POST -sSLd \"#{tx.to_hex}\" \"https://mempool.space/signet/api/tx\""
-
         tx.to_hex
       end
     end

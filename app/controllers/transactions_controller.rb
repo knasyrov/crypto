@@ -1,5 +1,5 @@
 class TransactionsController < ApplicationController
-  before_action :set_transaction, only: %i[ show ]
+  before_action :set_transaction, only: %i[ show send_tr ]
 
   def index
     @transactions = Transaction.all
@@ -14,9 +14,6 @@ class TransactionsController < ApplicationController
 
   def create
     @transaction = Transaction.new(transaction_params)
-    #@transaction.fee_percent = params[:fee_percent]
-    #@transaction.fee_value = params[:fee_value]
-    puts "--->", @transaction.inspect
 
     respond_to do |format|
       if @transaction.save
@@ -27,6 +24,13 @@ class TransactionsController < ApplicationController
     end
   end
 
+  def send_tr
+    puts 'SEND SEND'
+    puts id, @transaction
+    #hex = BitcoinE::Client.transaction(@transaction)
+    #puts "curl -X POST -sSLd \"#{hex}\" \"https://mempool.space/signet/api/tx\""
+    #puts "TXID = #{txid}"
+  end
 
   private
     def set_transaction
