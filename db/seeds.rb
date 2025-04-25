@@ -7,7 +7,3 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-
-['USDT'].each do |currency|
-  Currency.find_or_create_by(key: 'usdt', name: 'Tether USDt')
-end

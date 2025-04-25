@@ -1,20 +1,8 @@
 version: '3.5'
 
 services:
-
-  web:
-    hostname: web
-    build: .
-    ports:
-      - 3000:80
-    restart: always
-    networks:
-      - net_postgres
-    depends_on:
-      - db
-
   db:
-    container_name: postgres_container
+    #container_name: postgres_container
     image: postgres
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
@@ -23,14 +11,25 @@ services:
     volumes:
       - postgres:/data/postgres
     ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+      - "5432:5432"
     networks:
-      - net_postgres
+      - postgres
     restart: unless-stopped
 
+  web:
+    #hostname: web
+    build: .
+    ports:
+      - '3001:3000'
+    #restart: always
+    networks:
+      - postgres
+    depends_on:
+      - db
+
 networks:
-  net_postgres:
+  postgres:
     driver: bridge
 
 volumes:
-    postgres:
+  postgres:
