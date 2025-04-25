@@ -175,7 +175,8 @@ module BitcoinE
         #puts "verifed = #{verifed}"
 
         #puts tx.to_payload.inspect
-
+        trin.hex = tx.to_hex
+        trin.save
         tx.to_hex
       end
     end

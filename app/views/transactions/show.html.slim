@@ -5,6 +5,7 @@ p style="color: green" = notice
 br
 br
 .col-auto
-  = link_to 'Отправить', send_tr_transaction_path(@transaction), class: 'btn btn-warning'
-  | &nbsp; &nbsp;
+  - if @transaction.state.nil? || @transaction.state == 0
+    = link_to 'Отправить', send_tr_transaction_path(@transaction), class: 'btn btn-warning'
+    | &nbsp; &nbsp;
   = link_to 'Назад', transactions_path, class: 'btn btn-light'

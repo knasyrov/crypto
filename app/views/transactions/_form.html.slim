@@ -11,7 +11,7 @@
       = form.label "Кошелек", class: 'form-label'
     .col-6
       = form.select :in_addr, 
-                    Address.where(direction: 0).all.collect { |p| [ "#{p.eid} - #{p.balance}", p.eid, { data: { eid: p.eid, balance: p.balance }} ] },
+                    Address.all.collect { |p| [ "#{p.eid} - #{p.balance}", p.eid, { data: { eid: p.eid, balance: p.balance }} ] },
                     { include_blank: true },
                     class: 'form-control', 'data-action' => "transaction#change_input", 'data-transaction-target' => "source"
     .col-3

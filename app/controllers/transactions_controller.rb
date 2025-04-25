@@ -27,7 +27,7 @@ class TransactionsController < ApplicationController
   end
 
   def send_tr
-    puts 'SEND SEND'
+    # puts 'SEND SEND'
     hex = BitcoinE::Client.transaction(@transaction)
     @transaction.state = 1
     @transaction.save
@@ -35,7 +35,9 @@ class TransactionsController < ApplicationController
     path = "https://mempool.space/signet/api/tx"
     response = HTTParty.post(path, { body: hex }) 
     j = response.body
-    puts j.inspect
+    #puts j.inspect, response.status
+    #redirect_to @transaction, notice: "Transaction was successfully updated."
+    render action: :show
   end
 
   private

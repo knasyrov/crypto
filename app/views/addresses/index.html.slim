@@ -1,6 +1,8 @@
 = content_for :title, "Адреса"
 
-h3= link_to 'reload', reload_addresses_path 
+= link_to reload_addresses_path, class: 'btn btn-small btn-primary', remote: true do
+  i.bi.bi-arrow-repeat
+br
 br
 table.table.table-bordered
   thead 
