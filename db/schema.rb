@@ -10,18 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_23_044754) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_24_153906) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "addresses", force: :cascade do |t|
-    t.string "eid"
+  create_table "addresses", primary_key: "eid", id: :string, force: :cascade do |t|
     t.decimal "balance"
     t.string "path"
     t.integer "direction"
     t.string "wif"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["wif"], name: "index_addresses_on_wif"
   end
 
   create_table "transactions", force: :cascade do |t|

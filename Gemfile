@@ -65,10 +65,6 @@ gem "dotenv", "~> 3.1"
 
 gem "slim-rails", "~> 3.7"
 
-#gem "coingecko_ruby", "~> 0.4.2"
-
 gem 'bitcoinrb'
 
 gem "httparty", "~> 0.23.1"
-
-#gem "leveldb-native"

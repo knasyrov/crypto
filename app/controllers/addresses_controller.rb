@@ -3,6 +3,7 @@ require 'httparty'
 
 class AddressesController < ApplicationController
   def index
+=begin
     Bitcoin.chain_params = :signet
     mnemonic = Bitcoin::Mnemonic.new('english')
     
@@ -32,6 +33,8 @@ class AddressesController < ApplicationController
       end
     end
 
+    @addresses = Address.all
+=end
     @addresses = Address.all
   end
 
