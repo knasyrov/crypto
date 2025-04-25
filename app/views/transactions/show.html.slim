@@ -2,5 +2,9 @@ p style="color: green" = notice
 
 == render @transaction
 
-div
-  = link_to "Back to transactions", transactions_path
+br
+br
+.col-auto
+  = link_to 'Запустить', '', class: 'btn btn-primary'
+  | &nbsp; &nbsp;
+  = link_to 'Назад', transactions_path, class: 'btn btn-light'

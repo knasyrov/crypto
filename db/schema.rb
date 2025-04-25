@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_24_153906) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_25_101014) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,5 +34,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_24_153906) do
     t.integer "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "hex"
   end
 end

@@ -1,1 +1,14 @@
+= content_for :title, "Транзакция #{transaction.updated_at.strftime("%d.%m.%Y %H:%M")}"
 div id="#{dom_id transaction}"
+  = "С адреcа - #{transaction.in_addr}, будет списано = #{transaction.in_value} на кошелек #{transaction.out_addr}" 
+  
+  br
+  = "коммиссия составит #{transaction.fee_value}"
+  
+  br
+  = "Сдача будет зачислена на кошелек - #{transaction.change_addr}"
+  
+  hr
+  b HEX:
+  = text_area_tag 'hex', transaction.hex, class: 'form-control', rows: 5
+
