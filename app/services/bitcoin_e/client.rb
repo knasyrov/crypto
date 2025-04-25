@@ -174,6 +174,8 @@ module BitcoinE
         verifed = tx.verify_input_sig(0, script_input_pubkey, amount: last_sum)
         #puts "verifed = #{verifed}"
 
+        #puts tx.to_payload.inspect
+
         tx.to_hex
       end
     end

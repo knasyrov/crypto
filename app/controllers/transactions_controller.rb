@@ -1,3 +1,5 @@
+require 'httparty'
+
 class TransactionsController < ApplicationController
   before_action :set_transaction, only: %i[ show send_tr ]
 
@@ -26,10 +28,14 @@ class TransactionsController < ApplicationController
 
   def send_tr
     puts 'SEND SEND'
-    puts id, @transaction
-    #hex = BitcoinE::Client.transaction(@transaction)
-    #puts "curl -X POST -sSLd \"#{hex}\" \"https://mempool.space/signet/api/tx\""
-    #puts "TXID = #{txid}"
+    hex = BitcoinE::Client.transaction(@transaction)
+    @transaction.state = 1
+    @transaction.save
+
+    path = "https://mempool.space/signet/api/tx"
+    response = HTTParty.post(path, { body: hex }) 
+    j = response.body
+    puts j.inspect
   end
 
   private
