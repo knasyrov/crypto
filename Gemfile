@@ -70,3 +70,4 @@ gem "slim-rails", "~> 3.7"
 gem 'bitcoinrb'
 
 gem "httparty", "~> 0.23.1"
+#gem "state_machine", "~> 1.2"

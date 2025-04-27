@@ -15,7 +15,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_25_101014) do
   enable_extension "plpgsql"
 
   create_table "addresses", primary_key: "eid", id: :string, force: :cascade do |t|
-    t.decimal "balance"
+    t.decimal "balance", default: "0.0"
     t.string "path"
     t.integer "direction"
     t.string "wif"
@@ -26,12 +26,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_25_101014) do
 
   create_table "transactions", force: :cascade do |t|
     t.decimal "in_value"
-    t.string "in_addr"
-    t.string "out_addr"
+    t.string "in_addr", null: false
+    t.string "out_addr", null: false
     t.string "change_addr"
     t.decimal "fee_value"
     t.string "txid"
-    t.integer "state"
+    t.integer "state", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "hex"
