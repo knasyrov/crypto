@@ -1,9 +1,5 @@
+= content_for :title, "Транзакции"
 p style="color: green" = notice
-
-h1 Transactions
-
-
-#transactions
 
 table.table.table-bordered
   thead 
@@ -14,9 +10,8 @@ table.table.table-bordered
   tbody
     - @transactions.each do |transaction|
       tr 
-        td= transaction.updated_at.strftime("%d.%m.%Y %H:%M")
+        td= link_to transaction.updated_at.strftime("%d.%m.%Y %H:%M"), transaction
         td= transaction.human_state
         td= transaction.in_value
-        td= link_to "Show", transaction
       
-= link_to "New transaction", new_transaction_path
+= link_to "Отправить", new_transaction_path
