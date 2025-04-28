@@ -1,6 +1,6 @@
 module BitcoinE
   class Transaction
-    def initialize tx
+    def initialize(tx)
       @trin = tx
     end
 
@@ -12,7 +12,7 @@ module BitcoinE
       pub_key = keyi.pubkey
 
       last_txid = get_last_tx(@trin.in_addr)
-      
+
       e = BitcoinE::Helpers.get_transactions_for_in(@trin.in_addr)
       last_sum = e.last
       tx = Bitcoin::Tx.new
@@ -31,12 +31,12 @@ module BitcoinE
       input_index = 0
       script_input_pubkey = Bitcoin::Script.parse_from_addr(@trin.in_addr)
       sig_hash = tx.sighash_for_input(input_index, script_input_pubkey, sig_version: :witness_v0, amount: last_sum)
-      signature = keyi.sign(sig_hash) + [Bitcoin::SIGHASH_TYPE[:all]].pack('C')
+      signature = keyi.sign(sig_hash) + [ Bitcoin::SIGHASH_TYPE[:all] ].pack("C")
 
       tx.in[0].script_witness.stack << signature
       tx.in[0].script_witness.stack << pub_key.htb
       verifed = tx.verify_input_sig(0, script_input_pubkey, amount: last_sum)
-      raise 'Transaction not virifed' unless verifed
+      raise "Transaction not virifed" unless verifed
 
       tx.to_hex
     end

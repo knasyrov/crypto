@@ -4,5 +4,5 @@ class Address < ApplicationRecord
 
   validates :eid, :wif, uniqueness: true
 
-  has_many :in_transactions, class_name: 'Transaction', foreign_key: :in_addr 
+  has_many :in_transactions, class_name: "Transaction", foreign_key: :in_addr
 end

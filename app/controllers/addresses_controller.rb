@@ -1,5 +1,5 @@
-require 'bitcoin'
-require 'httparty'
+require "bitcoin"
+require "httparty"
 
 class AddressesController < ApplicationController
   def index
@@ -20,7 +20,7 @@ class AddressesController < ApplicationController
 =begin
   def get_balance(addr)
     path = "https://mempool.space/signet/api/address/#{addr}/txs"
-    response = HTTParty.get(path) 
+    response = HTTParty.get(path)
     j = JSON.parse(response.body)
     total = 0
     if j.kind_of?(Array)

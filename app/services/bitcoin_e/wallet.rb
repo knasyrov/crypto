@@ -1,17 +1,16 @@
 module BitcoinE
   class Wallet
     def initialize
-      
     end
 
     def call
-      return if File.exist?('wallet.json')
+      return if File.exist?("wallet.json")
 
 
-      
+
       word_list = BitcoinE::Helpers.generate_word_list
       seed = BitcoinE::Helpers.generate_seed(word_list)
-      
+
       master_key = Bitcoin::ExtKey.generate_master(seed)
       wif = master_key.key.to_wif
 
@@ -24,7 +23,7 @@ module BitcoinE
         out_addr: addr_generator(master_key, 1)
       }
 
-      File.open("wallet.json", 'w') do |f|
+      File.open("wallet.json", "w") do |f|
         f.write(data.to_json)
       end
     end
@@ -37,7 +36,7 @@ module BitcoinE
         addr = a.key.to_addr
         {
           addr: addr,
-          wif: "p2wpkh:#{a.key.to_wif}"  
+          wif: "p2wpkh:#{a.key.to_wif}"
         }
       end
     end

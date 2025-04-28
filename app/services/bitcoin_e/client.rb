@@ -1,21 +1,18 @@
-require 'bitcoin'
-require 'httparty'
+require "bitcoin"
+require "httparty"
 
 module BitcoinE
-  
   class Client
-
     class << self
-
       def generate
-        return if File.exist?('wallet.json')
+        return if File.exist?("wallet.json")
 
         Bitcoin.chain_params = :signet
-        mnemonic = Bitcoin::Mnemonic.new('english')
+        mnemonic = Bitcoin::Mnemonic.new("english")
         entropy = SecureRandom.hex(32)
         word_list = mnemonic.to_mnemonic(entropy)
         seed = mnemonic.to_seed(word_list)
-        
+
         master_key = Bitcoin::ExtKey.generate_master(seed)
         wif = master_key.key.to_wif
 
@@ -28,7 +25,7 @@ module BitcoinE
           out_addr: addr_generator(master_key, 1)
         }
 
-        File.open("wallet.json", 'w') do |f|
+        File.open("wallet.json", "w") do |f|
           f.write(data.to_json)
         end
       end
@@ -41,7 +38,7 @@ module BitcoinE
           addr = a.key.to_addr
           {
             addr: addr,
-            wif: "p2wpkh:#{a.key.to_wif}"  
+            wif: "p2wpkh:#{a.key.to_wif}"
           }
         end
       end
@@ -51,26 +48,26 @@ module BitcoinE
 
         file = File.open "wallet.json"
         data = JSON.load file
-        master_key = Bitcoin::ExtPubkey.from_base58(data['master_key'])
-        
-        load_by_direction(master_key, data['in_addr'], 0)
-        load_by_direction(master_key, data['out_addr'], 1)
+        master_key = Bitcoin::ExtPubkey.from_base58(data["master_key"])
+
+        load_by_direction(master_key, data["in_addr"], 0)
+        load_by_direction(master_key, data["out_addr"], 1)
       end
 
-      def load_by_direction(master_key, data, direction) 
+      def load_by_direction(master_key, data, direction)
         data.each_with_index do |e, i|
           key = master_key.derive(direction).derive(i)
           path = "m/84/0'/0'/#{direction}/#{i}"
-          
+
           addr = Address.new(
             eid: key.addr,
             path: path,
             direction: direction,
-            wif: e['wif'].split(':').last
+            wif: e["wif"].split(":").last
           )
-          #addr.balance = get_balance(key.addr)
+          # addr.balance = get_balance(key.addr)
           addr.save
-          putc '.'
+          putc "."
         end
       end
 
@@ -78,10 +75,10 @@ module BitcoinE
         Bitcoin.chain_params = :signet
 
         path = "https://mempool.space/signet/api/address/#{addr}/txs"
-        response = HTTParty.get(path) 
+        response = HTTParty.get(path)
         j = JSON.parse(response.body)
         last = j.kind_of?(Array) ? j.first : j
-        last['txid']
+        last["txid"]
       end
 
 =begin
@@ -99,7 +96,7 @@ module BitcoinE
           wif = '' #ext_pub.derive(idx).key.to_wif
           k = Bitcoin::Key.new(pubkey: pub_key, key_type: Bitcoin::Key::TYPES[:p2wpkh])
           #puts "#{k.to_addr}"
-      
+
           _total = get_transactions(k.to_addr)
           puts "#{k.to_addr} #{pub_key} - #{wif} - #{_total}\n"
           total += _total
@@ -111,21 +108,21 @@ module BitcoinE
 
       def get_transactions_for_in(addr)
         path = "https://mempool.space/signet/api/address/#{addr}/txs"
-        response = HTTParty.get(path) 
+        response = HTTParty.get(path)
         j = JSON.parse(response.body)
-      
+
         index = 0
         value = 0
         if j.kind_of?(Array) && !j.first.nil?
-          j.first['vout'].each_with_index do |e, i|
-            if e['scriptpubkey_address'] == addr
+          j.first["vout"].each_with_index do |e, i|
+            if e["scriptpubkey_address"] == addr
               puts "#{i} == #{e}"
-              value = e['value']
+              value = e["value"]
               index = i
             end
           end
         end
-        [index, value]
+        [ index, value ]
       end
 
 
@@ -138,7 +135,7 @@ module BitcoinE
       end
 
 
-      def transaction trin
+      def transaction(trin)
         Bitcoin.chain_params = :signet
         w = Address.find_by_eid(trin.in_addr)
         wif = w.wif
@@ -147,10 +144,10 @@ module BitcoinE
         pub_key = keyi.pubkey
 
         last_txid = get_last_tx(trin.in_addr)
-        
+
         e = BitcoinE::Client.get_transactions_for_in(trin.in_addr)
         last_sum = e.last
-        #puts "last_txid = #{last_txid}, last_sum = #{last_sum}"
+        # puts "last_txid = #{last_txid}, last_sum = #{last_sum}"
         tx = Bitcoin::Tx.new
         tx.in << Bitcoin::TxIn.new(out_point: Bitcoin::OutPoint.from_txid(last_txid, e.first))
 
@@ -167,19 +164,18 @@ module BitcoinE
         input_index = 0
         script_input_pubkey = Bitcoin::Script.parse_from_addr(trin.in_addr)
         sig_hash = tx.sighash_for_input(input_index, script_input_pubkey, sig_version: :witness_v0, amount: last_sum)
-        signature = keyi.sign(sig_hash) + [Bitcoin::SIGHASH_TYPE[:all]].pack('C')
+        signature = keyi.sign(sig_hash) + [ Bitcoin::SIGHASH_TYPE[:all] ].pack("C")
 
         tx.in[0].script_witness.stack << signature
         tx.in[0].script_witness.stack << pub_key.htb
         verifed = tx.verify_input_sig(0, script_input_pubkey, amount: last_sum)
-        #puts "verifed = #{verifed}"
+        # puts "verifed = #{verifed}"
 
-        #puts tx.to_payload.inspect
+        # puts tx.to_payload.inspect
         trin.hex = tx.to_hex
         trin.save
         tx.to_hex
       end
     end
-
   end
 end

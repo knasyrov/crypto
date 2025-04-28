@@ -4,7 +4,7 @@ class CreateAddresses < ActiveRecord::Migration[7.2]
       t.string :eid, primary_key: true
       t.decimal :balance, default: 0
       t.string :path
-      t.integer :direction 
+      t.integer :direction
       t.string :wif
 
       t.timestamps

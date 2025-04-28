@@ -1,12 +1,12 @@
-#require 'bitcoinrb'
-##require 'config/environment'
+# require 'bitcoinrb'
+# #require 'config/environment'
 
 namespace :crypto do
   desc "Build new wallet"
   task create_wallet: :environment do
     BitcoinE::Client.generate
     BitcoinE::Client.load_data
-=begin    
+=begin
     Bitcoin.chain_params = :signet
     mnemonic = Bitcoin::Mnemonic.new('english')
 
@@ -15,7 +15,7 @@ namespace :crypto do
     master_key = Bitcoin::ExtKey.generate_master(seed)
 
     mempool = Mempool.new
-    
+
 
     (0..20).each do |i|
       a = master_key.derive(84, true).derive(0, true).derive(i)

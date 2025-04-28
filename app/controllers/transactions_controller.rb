@@ -1,4 +1,4 @@
-require 'httparty'
+require "httparty"
 
 class TransactionsController < ApplicationController
   before_action :set_transaction, only: %i[ show send_tr ]
@@ -32,10 +32,10 @@ class TransactionsController < ApplicationController
     @transaction.save
 
     path = "https://mempool.space/signet/api/tx"
-    response = HTTParty.post(path, { body: hex }) 
+    response = HTTParty.post(path, { body: hex })
     j = response.body
-    #puts j.inspect, response.status
-    #redirect_to @transaction, notice: "Transaction was successfully updated."
+    # puts j.inspect, response.status
+    # redirect_to @transaction, notice: "Transaction was successfully updated."
     render action: :show
   end
 
