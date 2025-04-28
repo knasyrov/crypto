@@ -15,7 +15,7 @@ table.table.table-bordered
     - @transactions.each do |transaction|
       tr 
         td= transaction.updated_at.strftime("%d.%m.%Y %H:%M")
-        td= transaction.state
+        td= transaction.human_state
         td= transaction.in_value
         td= link_to "Show", transaction
       
