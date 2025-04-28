@@ -27,7 +27,6 @@ class TransactionsController < ApplicationController
   end
 
   def send_tr
-    # puts 'SEND SEND'
     hex = BitcoinE::Client.transaction(@transaction)
     @transaction.state = 1
     @transaction.save
