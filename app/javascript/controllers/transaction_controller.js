@@ -9,13 +9,9 @@ export default class extends Controller {
   }
 
   change_input(event) {
-    //console.log('fasdfd2');
-    //console.log(event);
-
     var eid = this.sourceTarget.selectedOptions[0].dataset.eid
     var balance = this.sourceTarget.selectedOptions[0].dataset.balance
     this.balanceTarget.value = balance
-    // console.log('eid = ', eid, ", balance = ", balance);
   }
 
   change_in(event) {

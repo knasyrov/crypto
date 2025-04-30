@@ -12,7 +12,7 @@ table.table.table-bordered
       th Баланс (sat.)
   tbody
     - @addresses.each do |e| 
-      tr 
+      tr
         td= e.eid
         td= e.path
         td= number_to_sat(e.balance) 

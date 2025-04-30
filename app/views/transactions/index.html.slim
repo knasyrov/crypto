@@ -9,7 +9,7 @@ table.table.table-bordered
       th Сумма
   tbody
     - @transactions.each do |transaction|
-      tr 
+      tr
         td= link_to transaction.updated_at.strftime("%d.%m.%Y %H:%M"), transaction
         td= transaction.state
         td= number_to_sat(transaction.in_value)
