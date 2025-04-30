@@ -1,7 +1,4 @@
-class Transaction < ApplicationRecord
-  # belongs_to :in_addr, class_name: 'Address', foreign_key: :eid
-  # belongs_to :change_addr, class_name: 'Address', foreign_key: :eid
-  
+class Transaction < ApplicationRecord  
   validates :in_addr, :out_addr, :change_addr, presence: true
 
   enum state: {
@@ -10,4 +7,6 @@ class Transaction < ApplicationRecord
     error: 2
   }
 
+  belongs_to :in, class_name: 'Address', foreign_key: :in_addr
+  belongs_to :change, class_name: 'Address', foreign_key: :change_addr
 end
