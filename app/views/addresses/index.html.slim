@@ -15,13 +15,13 @@ table.table.table-bordered
       tr 
         td= e.eid
         td= e.path
-        td= e.balance.to_i 
+        td= number_to_sat(e.balance) 
 
   tfoot
     tr
       td 
       td 
-      td= @addresses.sum(:balance).to_i
+      td= number_to_sat(@addresses.sum(:balance))
 
 
 

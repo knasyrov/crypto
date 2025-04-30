@@ -9,9 +9,9 @@ table.table.table-bordered
       th Total success transactions
   tbody 
     tr 
-      td= Transaction.where(state: 1).sum(&:fee_value)
+      td= number_to_sat(Transaction.completed.sum(&:fee_value))
       td= Transaction.count
-      td= Transaction.where(state: 1).count
+      td= Transaction.completed.count
 
 br
 hr 
@@ -36,6 +36,6 @@ table.table.table-bordered
         td= tr.updated_at.strftime("%d.%m.%Y %H:%M")
         td= tr.in_addr
         td= tr.out_addr
-        td= tr.in_value
-        td= tr.fee_value
-        td= tr.human_state
+        td= number_to_sat(tr.in_value)
+        td= number_to_sat(tr.fee_value)
+        td= tr.state

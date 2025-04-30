@@ -11,7 +11,7 @@ table.table.table-bordered
     - @transactions.each do |transaction|
       tr 
         td= link_to transaction.updated_at.strftime("%d.%m.%Y %H:%M"), transaction
-        td= transaction.human_state
-        td= transaction.in_value
+        td= transaction.state
+        td= number_to_sat(transaction.in_value)
       
 = link_to "Отправить", new_transaction_path
