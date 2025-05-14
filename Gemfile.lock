@@ -101,7 +101,7 @@ GEM
       secp256k1rb (= 0.1.1)
       siphash
       thor
-    bootsnap (1.18.4)
+    bootsnap (1.18.5)
       msgpack (~> 1.2)
     brakeman (7.0.2)
       racc
